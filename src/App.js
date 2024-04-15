@@ -1,23 +1,48 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { data } from './data';
 import './App.css';
 
 function App() {
+  const [place, setPlace] = useState(0);
+  const {id, name, image, description} = data[place];
+  
+  const previousPlace = () => {
+     setPlace((place) => {
+      place--;
+      if (place < 0) {
+        return data.length - 1;
+      }
+      return place;
+     })
+  } 
+  const nextPlace = () => {
+    setPlace((place) => {
+      place++;
+      if (place > data.length - 1) {
+        place = 0;
+      }
+      return place;
+    })
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <div className='container'>
+        <h1>MOST VISITED PLACES IN THE WORLD</h1>
+      </div>
+      <div className='container'>
+        <img src={image} width="500px" alt="place"/>
+      </div>
+      <div className='container'>
+        <h2>{id}. {name}</h2>
+      </div>
+      <div className='container'>
+        <p>{description}</p>
+      </div>
+      <div className='btn'>
+        <button onClick={previousPlace}>Previous</button>
+        <button onClick={nextPlace}>Next</button>
+      </div>
+
     </div>
   );
 }
